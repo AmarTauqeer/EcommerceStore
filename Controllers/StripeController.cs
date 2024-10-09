@@ -48,7 +48,7 @@ namespace EcommerceStore.Controllers
             var currency = "usd";
             var successUrl = "http://localhost:5000/stripe/confirmation/"+token;
             var cancleUrl = "http://localhost:3000/shopping-cart?token="+token;
-            StripeConfiguration.ApiKey = "sk_test_51IBn26IIuSnyNovEqMRh412jcNlFqWhyOxJhJjPxNENd24xHvmfWBTBUDVqwk7RIIx2Ut8K0DiCgK2KJE1ECVmTu00TXxvUau7";//_striptSettings.SecretKey;
+            StripeConfiguration.ApiKey = _striptSettings.SecretKey;
 
             if (cartDetails.Count > 0)
             {
