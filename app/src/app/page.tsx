@@ -84,7 +84,7 @@ function page() {
   return (
       <form className='flex justify-center items-center h-screen p-6' onSubmit={handleSubmit(handleSignin)}>
 
-        <div className='bg-slate-50 w-96 p-6 rounded shadow-2xl'>
+        <div className='bg-slate-50 w-96 p-10 rounded-2xl shadow-2xl'>
           <div className='flex items-center justify-center mb-4'>
             <LiaUserLockSolid size={50} className='h-18 text-blue-500' />
           </div>
