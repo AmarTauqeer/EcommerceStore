@@ -30,7 +30,7 @@ and , [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloa
 ## GitHub and Video
 
 - [GitHub](https://github.com/AmarTauqeer/EcommerceStore).
-- [Video](https://youtu.be/8QY4ki7Ct7I).
+- [Video](https://youtu.be/BZvygirm2Q0).
 
 ## Install and Run
 
