@@ -6,10 +6,11 @@ import { useGlobalContext } from '../Context/store'
 import { useRouter } from 'next/navigation'
 
 type Props = {
-    customToken: string
+    customToken: string,
+    user:number
 }
 
-const UserDropdown: FunctionComponent<Props> = ({ customToken }) => {
+const UserDropdown: FunctionComponent<Props> = ({ customToken, user }) => {
     const { setToken } = useGlobalContext();
     const router = useRouter();
     const handleSignout = (e: React.MouseEvent<HTMLElement>) => {
@@ -25,6 +26,12 @@ const UserDropdown: FunctionComponent<Props> = ({ customToken }) => {
 
     const handleResetPassword = (e: React.MouseEvent<HTMLElement>) => {
         router.push(`/user/reset-password?token=${customToken}`);
+
+    }
+
+    const handleAdminPanel = (e: React.MouseEvent<HTMLElement>) => {
+        setToken("");
+        router.push(`/orders?customToken=${customToken}&userId=${user}`);
 
     }
     return (
@@ -50,16 +57,16 @@ const UserDropdown: FunctionComponent<Props> = ({ customToken }) => {
                             Profile
                         </button>
                     </MenuItem>
-                    {/* <MenuItem>
+                    <MenuItem>
                     <button
                                 type='button'
-                                onClick={handleResetPassword}
+                                onClick={handleAdminPanel}
                                 className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
                             >
-                               Reset Password
+                               Admin Area
                             </button>
                     </MenuItem>
-                     */}
+                    
                     <form>
                         <MenuItem>
                             <button

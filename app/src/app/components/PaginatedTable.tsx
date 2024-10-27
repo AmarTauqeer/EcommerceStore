@@ -18,13 +18,13 @@ export interface OrderTypes {
     key: number
 }
 
-export default function App({ orderData }: { orderData: OrderTypes[] }) {
+const PaginatedTable= async ({ orderData }: { orderData: OrderTypes[] }) =>{
     const [page, setPage] = React.useState(1);
-    const rowsPerPage = 4;
+    const rowsPerPage = 5;
 
     const pages = Math.ceil(orderData.length / rowsPerPage);
 
-    const items = React.useMemo(() => {
+    const items = await React.useMemo(() => {
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
 
@@ -65,3 +65,5 @@ export default function App({ orderData }: { orderData: OrderTypes[] }) {
         </Table>
     );
 }
+
+export default PaginatedTable

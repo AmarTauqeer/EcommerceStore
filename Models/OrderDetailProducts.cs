@@ -10,6 +10,8 @@ namespace EcommerceStore.Models
         public int orderId { get; set; }
         public int cartId { get; set; }
         public int productId { get; set; }
+        public string? productTitle { get; set; }
+        public string? imagePath { get; set; }
         public decimal price { get; set; }
         public int quantity { get; set; }
         public decimal amountPerProduct { get; set; }

@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EcommerceStore.Resource;
-using EcommerceStore.Services;
-using Microsoft.AspNetCore.Authorization;
 using Stripe;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using EcommerceStore.Models;
-using Stripe.BillingPortal;
 using Stripe.Checkout;
-using System.Reflection.Metadata;
 
 namespace EcommerceStore.Controllers
 {

@@ -185,7 +185,7 @@ const ShoptingCart = () => {
     }
 
     const fetchData = async (id: number) => {
-        setIsLoading(true)
+        // setIsLoading(true)
         const response = await fetch(`${apiUrl}Cart/Cart/0/0/${id}/0/0/0/None`);
         const result = await response.json();
         if (result.length > 0) {
@@ -204,7 +204,7 @@ const ShoptingCart = () => {
             setData([]);
             setCartCount(0);
         }
-        setIsLoading(false)
+        // setIsLoading(false)
     }
 
     useEffect(() => {

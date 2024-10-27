@@ -75,8 +75,10 @@ namespace EcommerceStore.Controllers
         }
 
         [HttpPut("UpsertProduct")]
-        public IActionResult UpsertProduct([FromForm] Product productToUpsert)
+        public IActionResult UpsertProduct(Product productToUpsert)
         {
+            // Console.WriteLine(productToUpsert.ImageFile);
+            // return Ok();
             string oldImagePath = "";
             if (productToUpsert.productId != 0)
             {
@@ -106,7 +108,7 @@ namespace EcommerceStore.Controllers
                 }
             }
 
-            // if (productToUpsert.ImageFile?.Length > 1 * 1024 * 1024)
+            // if (productToUpsert.ImageFile?.Length > 2 * 1024 * 1024)
             // {
             //     return StatusCode(StatusCodes.Status400BadRequest, "File size should not exceed 1 MB");
             // }
@@ -155,7 +157,6 @@ namespace EcommerceStore.Controllers
                 }
 
             }
-
 
             if (_dapper.ExecuteSqlWithParameters(sql, sqlParameters))
             {

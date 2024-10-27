@@ -34,6 +34,10 @@ const Header = () => {
   } else {
     userCartCount = Number(params.get('cartCount'));
   }
+
+  if (params.get('customToken')) {
+    userToken="";
+  }
   
   const navigate = useRouter();
   const [header, setHeader] = useState(false);
@@ -69,13 +73,14 @@ const Header = () => {
 
   return (
     <main>
-      {userToken != null && <div className={header ? 'fixed w-full text-white bg-gray-400 flex flex-col px-2 pt-5 pb-5 sm:px-0 sm:justify-center sm:text-white md:px-2 md:w-[80%] md:text-white md:bg-gray-400 md:flex-row md:justify-between lg:text-white lg:px-2 lg:bg-gray-400 lg:flex-row lg:justify-between lg:w-[80%]' : 'flex flex-col px-2 pt-5 pb-5 text-white bg-blue-400 sm:px-0 sm:justify-center md:bg-blue-400 md:flex-row md:justify-between md:px-2 lg:px-2 lg:bg-blue-400 lg:flex-row lg:justify-between'}>
+      {userToken != null && userToken!="" && <div className={header ? 'fixed w-full text-white bg-gray-400 flex flex-col px-2 pt-5 pb-5 sm:px-0 sm:justify-center sm:text-white md:px-2 md:w-[80%] md:text-white md:bg-gray-400 md:flex-row md:justify-between lg:text-white lg:px-2 lg:bg-gray-400 lg:flex-row lg:justify-between lg:w-[80%]' : 'flex flex-col px-2 pt-5 pb-5 text-white bg-blue-400 sm:px-0 sm:justify-center md:bg-blue-400 md:flex-row md:justify-between md:px-2 lg:px-2 lg:bg-blue-400 lg:flex-row lg:justify-between'}>
         <div className='font-bold text-lg text-center pb-4 sm:pb-0'>
           E-Commerce
         </div>
         <div><Navbar /></div>
+        
         <div className='flex justify-center items-center mt-2 sm:flex lg:flex gap-4  text-[20px]'>
-          <UserDropdown customToken ={userToken} />
+          <UserDropdown customToken ={userToken} user={userId} />
           <div className='relative'>
             <FiHeart />
             <div className='bg-red-600 text-white rounded-full absolute top-0 right-0 w-[14px] h-[14px] text-[10px]  grid place-items-center translate-x-1 -translate-y-1'>

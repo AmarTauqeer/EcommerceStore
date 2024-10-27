@@ -30,4 +30,23 @@ const HandleQty = async (id: number, data: any, op: string) => {
 
 }
 
-export default HandleQty
+
+const HandleDelete = async (id: number, productId: number, userId:number) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    
+    if (id !== undefined && productId !== undefined && userId !== undefined) {
+        const response = await fetch(`${apiUrl}Cart/Cart/${id}/${productId}/${userId}`, {
+            method: "DELETE",
+        });
+
+        const status = await response.status;
+        if (status == 200) {
+            return status
+        }
+        else {
+            console.log("errors to delete data.")
+        }
+    }
+}
+
+export default HandleQty;HandleDelete;

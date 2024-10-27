@@ -23,7 +23,6 @@ namespace EcommerceStore.Data
 
             var contentPath = environment.ContentRootPath;
             var path = Path.Combine(contentPath, "Uploads");
-            // path = "c://projects/ImageManipulation.Ap/uploads" ,not exactly, but something like that
 
             if (!Directory.Exists(path))
             {

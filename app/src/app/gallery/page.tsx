@@ -1,74 +1,62 @@
 'use client'
-import React, { Suspense, useEffect, useState } from 'react'
-import ProductCard from '../components/ProductCard'
-import { useSearchParams } from 'next/navigation'
-import { useGlobalContext } from '../Context/store'
-import { CartTypesForUpdate } from '../../../types/type'
-import Loading from '../loading'
+import React, { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
+import Image from 'next/image'
+import Loader from '../../../public/loader.gif'
 
-
+const ProductCard = dynamic(() => import('../components/ProductCard'), {
+  ssr: false,
+  loading: () => <Image src={Loader} width={100} height={100}  alt='loading-spinner' />
+});
 
 const Gallary = () => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [data, setData] = useState<CartTypesForUpdate[]>([])
-  const { cartCount } = useGlobalContext();
+  const [data, setData] = useState([]);
+  const params = useSearchParams();
+  let search = "";
+  let token = "";
+  let userId = 0;
+  let cartCount = 0;
 
-  const params = useSearchParams()
-  const search = params.get('search')
-  const token = params.get('token')!;
-  let paramCartCount = params.get('cartCount');
-  var customCartCount: number = 0;
-  const [loading, setLoading] = useState(false);
-
-  if (paramCartCount != null || paramCartCount != "") {
-    customCartCount = Number(paramCartCount);
-  } else {
-    customCartCount = cartCount
-  }
-
-  var userId: number = 0;
-
-  if (token != null || token != "") {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    if (typeof window !== 'undefined') {
-      const jsonDecode = JSON.parse(window.atob(base64));
-      userId = jsonDecode.userId;
-    }
+  if (params != undefined) {
+    search = params.get('search')!;
+    token = params.get('token')!;
+    userId = Number(params.get('userId'));
+    cartCount = Number(params.get('cartCount'));
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
-      // await new Promise(resolve => setTimeout(resolve, 3000))
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const response = await fetch(`${apiUrl}Product/Products/0/0/0/0/None`);
       const result = await response.json();
       // console.log(result)
+
       if (result) {
         var filterData = [];
         if (search == 'mobile') {
-          filterData = result.filter((x: { categoryId: number }) => x.categoryId == 1);
+          filterData = await result.filter((x: { categoryId: number }) => x.categoryId == 1);
           setData(filterData)
         } else if (search == 'laptop') {
-          filterData = result.filter((x: { categoryId: number }) => x.categoryId == 2);
+          filterData = await result.filter((x: { categoryId: number }) => x.categoryId == 2);
           setData(filterData)
         } else if (search == 'ipad') {
-          filterData = result.filter((x: { categoryId: number }) => x.categoryId == 3);
+          filterData = await result.filter((x: { categoryId: number }) => x.categoryId == 3);
           setData(filterData)
         } else {
           setData(result)
         }
       }
-      setLoading(false)
     }
-    fetchData();
+    fetchData()
+
   }, [search])
 
 
   return (
     <>
       <div className='bg-slate-50 p-5 flex justify-center items-center'>
-        <h2 className='text-sm text-justify'>Note: Images sources:
+        <h2 className='text-sm text-justify text-black'>Note: Images sources:
           Photo by <a href="https://unsplash.com/@wasdrew?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Andras Vas</a> on <a href="https://unsplash.com/photos/macbook-pro-turned-on-Bd7gNnWJBkU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>,
           <a href="https://unsplash.com/@agk42?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Alex Knight</a> on <a href="https://unsplash.com/photos/laptop-computer-beside-coffee-mug-j4uuKnN43_M?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>,
           <a href="https://unsplash.com/@crew?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Crew</a> on <a href="https://unsplash.com/photos/person-using-a-laptop-4Hg8LH9Hoxc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>,
@@ -86,30 +74,27 @@ const Gallary = () => {
           <a href="https://unsplash.com/@rpnickson?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Roberto Nickson</a> on <a href="https://unsplash.com/photos/person-holding-tablet-computer-TB_cvdUHUuc?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
         </h2>
       </div>
-      {loading ? <div className='flex justify-center items-center h-screen'><Loading /></div> :
-        <div className='grid w-full grid-cols-1 gap-16 md:grid-cols-4 lg:grid-cols-4 bg-slate-50 p-5'>
-          {
-            data.map((d, idx) => (
-              <ProductCard
-                key={idx}
-                productId={d.productId}
-                title={d.productTitle}
-                description={d.productDescription}
-                quantity={d.quantity}
-                price={d.price}
-                amountPerProduct={d.amountPerProduct}
-                img={d.imagePath}
-                userId={userId}
-                cartId={d.cartId}
-                cartCount={customCartCount}
-                token={token}
-              />
 
-            ))
-          }
-
-        </div>
-      }
+      <div className='grid w-full grid-cols-1 gap-16 md:grid-cols-4 lg:grid-cols-4 bg-slate-50 p-5'>
+        {
+          data.map((d: any, idx: number) => (
+            <ProductCard
+              key={idx}
+              productId={d.productId}
+              title={d.productTitle}
+              description={d.productDescription}
+              quantity={d.quantity}
+              price={d.price}
+              amountPerProduct={d.amountPerProduct}
+              img={d.imagePath}
+              userId={userId}
+              cartId={d.cartId}
+              cartCount={cartCount}
+              token={token}
+            />
+          ))
+        }
+      </div>
     </>
   )
 }

@@ -25,7 +25,7 @@ namespace EcommerceStore.Controllers
         }
 
         [HttpGet("OrderDetail/{orderId}/{cartId}/{productId}/{userId}/{searchParam}")]
-        public IEnumerable<OrderDetail> GetOrderDetails(int orderId = 0, int cartId = 0,int userId = 0, int productId = 0, int modelId = 0, int brandId = 0, string searchParam = "None")
+        public IEnumerable<OrderDetailProducts> GetOrderDetails(int orderId = 0, int cartId = 0,int userId = 0, int productId = 0, int modelId = 0, int brandId = 0, string searchParam = "None")
         {
             string sql = @"EXEC [TutorialAppSchema].[spOrderDetail_Get]";
             string parameters = "";
@@ -80,7 +80,7 @@ namespace EcommerceStore.Controllers
             }
 
 
-            return _dapper.LoadDataWithParameters<OrderDetail>(sql, sqlParameters);
+            return _dapper.LoadDataWithParameters<OrderDetailProducts>(sql, sqlParameters);
         }
 
         [HttpPut("UpsertOrderDetail")]

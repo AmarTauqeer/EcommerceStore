@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SignInSchema } from '../../schemas/SignInAndUpSchema';
+import { SignInSchema } from '../../schemas/SignInAndUpSchema'; 
 import { ISignIn } from '../../types/type';
 import { useGlobalContext } from './Context/store';
 import { LiaUserLockSolid } from 'react-icons/lia';
@@ -68,7 +68,7 @@ function page() {
       const userId = jsonDecode.userId;
       
       const countCartLength:number= await fetchData(userId);
-      console.log(countCartLength);
+      // console.log(countCartLength);
           
       
       setToken(responseJson.token);
